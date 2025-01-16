@@ -1,30 +1,68 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <!-- Loading Spinner -->
+    <div v-if="isLoading" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading, please wait...</p>
+    </div>
+
+    <!-- Main Content -->
+    <router-view v-else />
+  </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      isLoading: true, // Set to true initially to show the spinner
+    };
+  },
+  mounted() {
+    // Simulate loading delay (replace this with actual loading logic)
+    setTimeout(() => {
+      this.isLoading = false; // Set to false to hide the spinner
+    }, 2000); // 2 seconds delay for demonstration
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+/* Import the Poppins font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* Loading Spinner Styles */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fefeff;
+  font-family: "Poppins", sans-serif; /* Use Poppins font */
 }
 
-nav {
-  padding: 30px;
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.loading-spinner p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
 }
 </style>
