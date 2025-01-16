@@ -1,112 +1,119 @@
 <template>
-  <div class="linktree">
-    <!-- Profile Section -->
-    <div class="profile">
-      <img :src="profile.image" alt="Profile Picture" class="profile-image" />
-      <h1>{{ profile.name }}</h1>
-      <p class="bio">{{ profile.bio }}</p>
-      <p class="username">@{{ profile.username }}</p>
-    </div>
-
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Search links..."
-        class="search-input"
-      />
-      <i class="fas fa-search search-icon"></i>
-    </div>
-    <br />
-
-    <!-- Links Section -->
-    <div class="links">
-      <!-- Dropdown for GitHub Links -->
-      <div class="dropdown">
-        <button
-          class="link-button dropdown-toggle"
-          @click="toggleDropdown('github')"
-          :aria-expanded="isDropdownOpen.github"
-        >
-          <i class="fab fa-github icon"></i>
-          <span>GitHub Projects</span>
-          <i
-            class="fas fa-chevron-down dropdown-icon"
-            :class="{ rotate: isDropdownOpen.github }"
-          ></i>
-        </button>
-        <transition name="slide">
-          <div
-            class="dropdown-content"
-            v-if="isDropdownOpen.github"
-            aria-label="GitHub Projects Dropdown"
-          >
-            <a
-              v-for="link in filteredGithubLinks"
-              :key="link.id"
-              :href="link.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="dropdown-link"
-            >
-              <i :class="link.icon" class="icon"></i>
-              <span>{{ link.label }}</span>
-            </a>
-          </div>
-        </transition>
+  <div class="linktree-container">
+    <div class="linktree">
+      <!-- Profile Section -->
+      <div class="profile">
+        <img :src="profile.image" alt="Profile Picture" class="profile-image" />
+        <h1>{{ profile.name }}</h1>
+        <p class="bio">{{ profile.bio }}</p>
+        <p class="username">@{{ profile.username }}</p>
       </div>
 
-      <!-- Dropdown for Social Media Links -->
-      <div class="dropdown">
-        <button
-          class="link-button dropdown-toggle"
-          @click="toggleDropdown('social')"
-          :aria-expanded="isDropdownOpen.social"
-        >
-          <i class="fas fa-share-alt icon"></i>
-          <span>Social Media</span>
-          <i
-            class="fas fa-chevron-down dropdown-icon"
-            :class="{ rotate: isDropdownOpen.social }"
-          ></i>
-        </button>
-        <transition name="slide">
-          <div
-            class="dropdown-content"
-            v-if="isDropdownOpen.social"
-            aria-label="Social Media Dropdown"
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Search links..."
+          class="search-input"
+        />
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <br />
+
+      <!-- Links Section -->
+      <div class="links">
+        <!-- Dropdown for GitHub Links -->
+        <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('github')"
+            :aria-expanded="isDropdownOpen.github"
           >
-            <a
-              v-for="link in filteredSocialLinks"
-              :key="link.id"
-              :href="link.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="dropdown-link"
-              :class="{ disabled: link.url === '#' }"
-              @click="handleLinkClick(link.url)"
+            <i class="fab fa-github icon"></i>
+            <span>GitHub Projects</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.github }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.github"
+              aria-label="GitHub Projects Dropdown"
             >
-              <i :class="link.icon" class="icon"></i>
-              <span>{{ link.label }}</span>
-            </a>
-          </div>
-        </transition>
+              <a
+                v-for="link in filteredGithubLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
+
+        <!-- Dropdown for Social Media Links -->
+        <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('social')"
+            :aria-expanded="isDropdownOpen.social"
+          >
+            <i class="fas fa-share-alt icon"></i>
+            <span>Social Media</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.social }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.social"
+              aria-label="Social Media Dropdown"
+            >
+              <a
+                v-for="link in filteredSocialLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+                :class="{ disabled: link.url === '#' }"
+                @click="handleLinkClick(link.url)"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
+
+        <!-- Other Links -->
+        <a
+          v-for="link in filteredOtherLinks"
+          :key="link.id"
+          :href="link.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-button"
+          :download="link.label === 'Resume' ? 'Resume.pdf' : null"
+        >
+          <i :class="link.icon" class="icon"></i>
+          <span>{{ link.label }}</span>
+        </a>
       </div>
 
-      <!-- Other Links -->
-      <a
-        v-for="link in filteredOtherLinks"
-        :key="link.id"
-        :href="link.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="link-button"
-        :download="link.label === 'Resume' ? 'Resume.pdf' : null"
-      >
-        <i :class="link.icon" class="icon"></i>
-        <span>{{ link.label }}</span>
-      </a>
+      <!-- Footer Section -->
+      <footer class="footer">
+        <p class="footer-text">Developed by codewithryry.</p>
+      </footer>
     </div>
 
     <!-- Back-to-Top Button -->
@@ -118,11 +125,6 @@
     >
       <i class="fas fa-arrow-up"></i>
     </button>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-      <p class="footer-text">Developed by codewithryry.</p>
-    </footer>
   </div>
 </template>
 
@@ -288,21 +290,22 @@ export default {
 /* Global Styles */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+.linktree-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .linktree {
   font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 20px;
-  background: #fff;
   color: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
   text-align: center;
-  width: 100%;
-  overflow: hidden;
-  position: relative;
 }
 
 /* Profile Section */
@@ -316,7 +319,7 @@ export default {
   border-radius: 50%;
   margin-bottom: 15px;
   border: 4px solid #000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 .profile h1 {
@@ -379,7 +382,7 @@ export default {
 /* Links Section */
 .links {
   width: 100%;
-  max-width: 350px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -396,7 +399,6 @@ export default {
   text-decoration: none;
   border-radius: 12px;
   font-size: 1rem;
-  font-weight: 500;
   transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.2s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   background: #fff;
@@ -423,7 +425,30 @@ export default {
 .dropdown-toggle {
   width: 100%;
   cursor: pointer;
-  font-weight: bold; /* Added bold text */
+  font-size: 1rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px;
+  text-align: left;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border: 1px solid #000;
+}
+
+.dropdown-toggle:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+.dropdown-toggle span {
+  font-size: 1rem;
+  color: #000;
 }
 
 .dropdown-icon {
@@ -456,7 +481,7 @@ export default {
   text-decoration: none;
   border-radius: 8px;
   transition: background 0.3s ease;
-  font-weight: bold; /* Added bold text */
+  font-size: 1rem;
 }
 
 .dropdown-link:hover {
@@ -465,7 +490,7 @@ export default {
 
 /* Back-to-Top Button */
 .back-to-top {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   right: 20px;
   background: #fff;
@@ -490,7 +515,6 @@ export default {
 .footer {
   margin-top: 40px;
   padding: 20px;
-  background: #fff;
   width: 100%;
   text-align: center;
 }
@@ -513,7 +537,7 @@ export default {
   }
 
   .profile h1 {
-    font-size: 2.0rem;
+    font-size: 1.8rem;
   }
 
   .bio {
@@ -530,7 +554,7 @@ export default {
   }
 
   .search-bar {
-    max-width: 90%;
+    max-width: 100%;
   }
 
   .search-input {

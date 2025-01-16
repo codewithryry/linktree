@@ -37,8 +37,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #fefeff;
   font-family: "Poppins", sans-serif; /* Use Poppins font */
 }
 
@@ -64,5 +62,30 @@ export default {
   margin-top: 10px;
   font-size: 1rem;
   color: #333;
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f4f4f9; /* Example background color */
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 800px; /* Adjust the max-width as needed */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 </style>
