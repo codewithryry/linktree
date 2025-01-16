@@ -146,8 +146,8 @@ export default {
       links: [
         {
           id: 1,
-          label: "GitHub Profile",
-          url: "https://github.com/codewithryry",
+          label: "GitHub Repository",
+          url: "https://github.com/codewithryry?tab=repositories",
           icon: "fab fa-github",
         },
         {
@@ -165,13 +165,13 @@ export default {
         {
           id: 4,
           label: "SafePath Prototype",
-          url: "https://github.com/codewithryry/minsu-safepath",
+          url: "https://codewithryry.github.io/minsu-safepath/",
           icon: "fas fa-code-branch",
         },
         {
           id: 5,
           label: "Trabahanap Job Analyzer",
-          url: "https://github.com/codewithryry/Trabahanap-job-matching-analyzer",
+          url: "https://trabahanap-job-matching-analyzer.onrender.com/",
           icon: "fas fa-briefcase",
         },
         {
