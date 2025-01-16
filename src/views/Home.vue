@@ -6,7 +6,7 @@
         <img :src="profile.image" alt="Profile Picture" class="profile-image" />
         <h1>{{ profile.name }}</h1>
         <p class="bio">{{ profile.bio }}</p>
-        <p class="username">@{{ profile.username }}</p>
+        <p class="username">@{{ profile.username }} on tiktok</p>
       </div>
 
       <!-- Search Bar -->
@@ -140,7 +140,7 @@ export default {
       profile: {
         name: "Reymel Mislang",
         bio: "Transforming ideas into interactive experiences, one line of code at a time.",
-        username: "codewithryry",
+        username: "betsyoneontg",
         image: require("@/assets/profile.jpg"),
       },
       links: [
@@ -422,11 +422,13 @@ export default {
   position: relative;
 }
 
+/* Dropdown Toggle Button */
 .dropdown-toggle {
   width: 100%;
   cursor: pointer;
   font-size: 1rem;
   color: #000;
+  font-family: 'Poppins', sans-serif; /* Add Poppins font */
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -440,16 +442,13 @@ export default {
   border: 1px solid #000;
 }
 
-.dropdown-toggle:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  opacity: 0.9;
-}
-
+/* Ensure the <span> inside the dropdown toggle uses Poppins */
 .dropdown-toggle span {
   font-size: 1rem;
   color: #000;
+  font-family: 'Poppins', sans-serif; /* Add Poppins font */
 }
+
 
 .dropdown-icon {
   margin-left: auto;
