@@ -57,6 +57,42 @@
             </div>
           </transition>
         </div>
+
+                <!-- Dropdown for Personal Links -->
+                <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('personal')"
+            :aria-expanded="isDropdownOpen.personal"
+          >
+            <i class="fas fa-user-circle icon"></i>
+            <span>Personal</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.personal }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.personal"
+              aria-label="Personal Dropdown"
+            >
+              <a
+                v-for="link in filteredPersonalLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+                :download="link.label === 'Resume' ? 'Resume.pdf' : null"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
         <!-- Dropdown for Social Media Links -->
         <div class="dropdown">
           <button
@@ -94,42 +130,6 @@
           </transition>
         </div>
       
-        <!-- Dropdown for Personal Links -->
-        <div class="dropdown">
-          <button
-            class="link-button dropdown-toggle"
-            @click="toggleDropdown('personal')"
-            :aria-expanded="isDropdownOpen.personal"
-          >
-            <i class="fas fa-user-circle icon"></i>
-            <span>Personal</span>
-            <i
-              class="fas fa-chevron-down dropdown-icon"
-              :class="{ rotate: isDropdownOpen.personal }"
-            ></i>
-          </button>
-          <transition name="slide">
-            <div
-              class="dropdown-content"
-              v-if="isDropdownOpen.personal"
-              aria-label="Personal Dropdown"
-            >
-              <a
-                v-for="link in filteredPersonalLinks"
-                :key="link.id"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="dropdown-link"
-                :download="link.label === 'Resume' ? 'Resume.pdf' : null"
-              >
-                <i :class="link.icon" class="icon"></i>
-                <span>{{ link.label }}</span>
-              </a>
-            </div>
-          </transition>
-        </div>
-
         <!-- Other Links -->
         <a
           v-for="link in filteredOtherLinks"
