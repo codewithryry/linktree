@@ -31,22 +31,40 @@ export default {
 /* Import the Poppins font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f4f4f9, #e0e0f0); /* Subtle gradient background */
+  color: #333;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 /* Loading Spinner Styles */
 .loading-spinner {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Poppins", sans-serif; /* Use Poppins font */
+  height: 100vh; /* Full viewport height */
+  text-align: center;
 }
 
 .spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #3498db;
+  border: 4px solid rgba(255, 255, 255, 0.3); /* Light border */
+  border-top: 4px solid #3498db; /* Blue gradient for spinner */
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
+  width: 50px; /* Slightly larger for better visibility */
+  height: 50px;
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; /* Smoother animation */
 }
 
 @keyframes spin {
@@ -59,27 +77,14 @@ export default {
 }
 
 .loading-spinner p {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #333;
+  margin-top: 16px; /* Increased margin for better spacing */
+  font-size: 0.9rem; /* Slightly larger text */
+  color: #555; /* Soft gray text color */
+  font-weight: 500; /* Medium font weight */
+  letter-spacing: 0.5px; /* Slight letter spacing for better readability */
 }
 
-/* Global Styles */
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #f4f4f9; /* Example background color */
-}
-
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
+/* Main Content Container */
 .app-container {
   width: 100%;
   max-width: 800px; /* Adjust the max-width as needed */
@@ -87,5 +92,17 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .spinner {
+    width: 40px; /* Smaller spinner for mobile */
+    height: 40px;
+  }
+
+  .loading-spinner p {
+    font-size: 0.8rem; /* Smaller text for mobile */
+  }
 }
 </style>

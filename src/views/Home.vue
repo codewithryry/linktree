@@ -23,41 +23,6 @@
 
       <!-- Links Section -->
       <div class="links">
-        <!-- Dropdown for GitHub Links -->
-        <div class="dropdown">
-          <button
-            class="link-button dropdown-toggle"
-            @click="toggleDropdown('github')"
-            :aria-expanded="isDropdownOpen.github"
-          >
-            <i class="fab fa-github icon"></i>
-            <span>GitHub Projects</span>
-            <i
-              class="fas fa-chevron-down dropdown-icon"
-              :class="{ rotate: isDropdownOpen.github }"
-            ></i>
-          </button>
-          <transition name="slide">
-            <div
-              class="dropdown-content"
-              v-if="isDropdownOpen.github"
-              aria-label="GitHub Projects Dropdown"
-            >
-              <a
-                v-for="link in filteredGithubLinks"
-                :key="link.id"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="dropdown-link"
-              >
-                <i :class="link.icon" class="icon"></i>
-                <span>{{ link.label }}</span>
-              </a>
-            </div>
-          </transition>
-        </div>
-
         <!-- Dropdown for Social Media Links -->
         <div class="dropdown">
           <button
@@ -95,6 +60,77 @@
           </transition>
         </div>
 
+        <!-- Dropdown for Personal Links -->
+        <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('personal')"
+            :aria-expanded="isDropdownOpen.personal"
+          >
+            <i class="fas fa-user-circle icon"></i>
+            <span>Personal</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.personal }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.personal"
+              aria-label="Personal Dropdown"
+            >
+              <a
+                v-for="link in filteredPersonalLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+                :download="link.label === 'Resume' ? 'Resume.pdf' : null"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
+
+        <!-- Dropdown for GitHub Links -->
+        <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('github')"
+            :aria-expanded="isDropdownOpen.github"
+          >
+            <i class="fab fa-github icon"></i>
+            <span>GitHub</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.github }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.github"
+              aria-label="GitHub Projects Dropdown"
+            >
+              <a
+                v-for="link in filteredGithubLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
+
         <!-- Other Links -->
         <a
           v-for="link in filteredOtherLinks"
@@ -103,7 +139,6 @@
           target="_blank"
           rel="noopener noreferrer"
           class="link-button"
-          :download="link.label === 'Resume' ? 'Resume.pdf' : null"
         >
           <i :class="link.icon" class="icon"></i>
           <span>{{ link.label }}</span>
@@ -112,7 +147,7 @@
 
       <!-- Footer Section -->
       <footer class="footer">
-        <p class="footer-text">Developed by codewithryry.</p>
+        <p class="footer-text"><small>Code by codewithryry.</small></p>
       </footer>
     </div>
 
@@ -125,6 +160,16 @@
     >
       <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Modal for Unavailable Links -->
+    <transition name="fade">
+      <div v-if="showModal" class="modal-overlay" @click="closeModal">
+        <div class="modal" @click.stop>
+          <p>This link is not available yet.</p>
+          <button @click="closeModal" class="modal-close-button">Close</button>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -136,6 +181,7 @@ export default {
       isDropdownOpen: {
         github: false,
         social: false,
+        personal: false,
       },
       profile: {
         name: "Reymel Mislang",
@@ -144,6 +190,12 @@ export default {
         image: require("@/assets/profile.jpg"),
       },
       links: [
+      {
+          id: 34,
+          label: "GitHub Profile",
+          url: "https://github.com/codewithryry",
+          icon: "fab fa-github",
+        },
         {
           id: 1,
           label: "GitHub Repository",
@@ -151,29 +203,31 @@ export default {
           icon: "fab fa-github",
         },
         {
-          id: 2,
-          label: "BoyloveYSeriesHub",
-          url: "https://boyloveyserieshub.vercel.app/",
-          icon: "fas fa-film",
+          id: 17,
+          label: "Dev.to Articles",
+          url: "https://dev.to/codewithryry",
+          icon: "fab fa-dev",
         },
         {
-          id: 3,
-          label: "SafePath",
-          url: "https://safepath-4pzk.onrender.com/",
-          icon: "fas fa-shield-alt",
+          id: 58,
+          label: "Telegram Channel",
+          url: "https://t.me/+XpsVdhvIlVM4ZTA1",
+          icon: "fab fa-telegram",
         },
         {
-          id: 4,
-          label: "SafePath Prototype",
-          url: "https://codewithryry.github.io/minsu-safepath/",
-          icon: "fas fa-code-branch",
+          id: 14,
+          label: "Send Me a Email",
+          url: "mailto:reymelrey.mislang@gmail.com",
+          icon: "fas fa-envelope",
         },
         {
-          id: 5,
-          label: "Trabahanap Job Analyzer",
-          url: "https://trabahanap-job-matching-analyzer.onrender.com/",
-          icon: "fas fa-briefcase",
+          id: 29,
+          label: "Buy Me a Coffee",
+          url: "https://buymeacoffee.com/reymelreym7",
+          icon: "fas fa-coffee",
         },
+      ],
+      personalLinks: [
         {
           id: 6,
           label: "Portfolio",
@@ -192,19 +246,13 @@ export default {
           url: "/Resume.pdf",
           icon: "fas fa-file-pdf",
         },
-        {
-          id: 14,
-          label: "Email",
-          url: "mailto:reymelrey.mislang@gmail.com",
-          icon: "fas fa-envelope",
-        },
       ],
       socialLinks: [
         {
-          id: 5,
-          label: "Spotify",
-          icon: "fab fa-spotify",
-          url: "https://open.spotify.com/user/yzay8x8u0lqinlp7mbxuy24aj",
+          id: 1,
+          label: "Facebook",
+          icon: "fab fa-facebook",
+          url: "https://www.facebook.com/reymelrey.528191/",
         },
         {
           id: 2,
@@ -216,17 +264,60 @@ export default {
           id: 3,
           label: "Instagram",
           icon: "fab fa-instagram",
-          url: "#",
+          url: "https://www.instagram.com/theycallmekennnnnnn/?hl=en",
         },
         {
           id: 4,
           label: "YouTube",
           icon: "fab fa-youtube",
+          url: "https://www.youtube.com/@bestyone",
+        },
+        {
+          id: 5,
+          label: "Spotify",
+          icon: "fab fa-spotify",
+          url: "https://open.spotify.com/user/yzay8x8u0lqinlp7mbxuy24aj",
+        },
+        {
+          id: 6,
+          label: "LinkedIn",
+          icon: "fab fa-linkedin",
+          url: "#",
+        },
+        {
+          id: 7,
+          label: "Pinterest",
+          icon: "fab fa-pinterest",
+          url: "#",
+        },
+        {
+          id: 8,
+          label: "TikTok",
+          icon: "fab fa-tiktok",
+          url: "https://www.tiktok.com/@betsyoneontg",
+        },
+        {
+          id: 9,
+          label: "Snapchat",
+          icon: "fab fa-snapchat",
+          url: "#",
+        },
+        {
+          id: 10,
+          label: "Reddit",
+          icon: "fab fa-reddit",
+          url: "#",
+        },
+        {
+          id: 11,
+          label: "Discord",
+          icon: "fab fa-discord",
           url: "#",
         },
       ],
       searchQuery: "",
       showBackToTop: false,
+      showModal: false, // Modal visibility state
     };
   },
   computed: {
@@ -235,10 +326,8 @@ export default {
         (link) =>
           link.icon.includes("github") ||
           link.icon.includes("code-branch") ||
-          link.label === "BoyloveYSeriesHub" ||
-          link.label === "SafePath" ||
-          link.label === "SafePath Prototype" ||
-          link.label === "Trabahanap Job Analyzer"
+          link.label === "GitHub Profile" ||
+          link.label === "Dev.to Articles" 
       );
     },
     otherLinks() {
@@ -259,6 +348,11 @@ export default {
         link.label.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
+    filteredPersonalLinks() {
+      return this.personalLinks.filter((link) =>
+        link.label.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
   },
   methods: {
     toggleDropdown(type) {
@@ -266,9 +360,12 @@ export default {
     },
     handleLinkClick(url) {
       if (url === "#") {
-        alert("This link is not available yet.");
+        this.showModal = true; // Show modal if link is unavailable
         event.preventDefault();
       }
+    },
+    closeModal() {
+      this.showModal = false; // Close modal
     },
     handleScroll() {
       this.showBackToTop = window.scrollY > 200;
@@ -287,6 +384,61 @@ export default {
 </script>
 
 <style scoped>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  width: 100%;
+}
+
+.modal p {
+  font-size: 1rem;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.modal-close-button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.modal-close-button:hover {
+  background: #333;
+}
+
+/* Fade Transition for Modal */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 /* Global Styles */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
