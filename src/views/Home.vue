@@ -23,6 +23,40 @@
 
       <!-- Links Section -->
       <div class="links">
+        <!-- Dropdown for GitHub Links -->
+        <div class="dropdown">
+          <button
+            class="link-button dropdown-toggle"
+            @click="toggleDropdown('github')"
+            :aria-expanded="isDropdownOpen.github"
+          >
+            <i class="fab fa-github icon"></i>
+            <span>GitHub</span>
+            <i
+              class="fas fa-chevron-down dropdown-icon"
+              :class="{ rotate: isDropdownOpen.github }"
+            ></i>
+          </button>
+          <transition name="slide">
+            <div
+              class="dropdown-content"
+              v-if="isDropdownOpen.github"
+              aria-label="GitHub Projects Dropdown"
+            >
+              <a
+                v-for="link in filteredGithubLinks"
+                :key="link.id"
+                :href="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="dropdown-link"
+              >
+                <i :class="link.icon" class="icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </div>
+          </transition>
+        </div>
         <!-- Dropdown for Social Media Links -->
         <div class="dropdown">
           <button
@@ -59,40 +93,7 @@
             </div>
           </transition>
         </div>
-        <!-- Dropdown for GitHub Links -->
-        <div class="dropdown">
-          <button
-            class="link-button dropdown-toggle"
-            @click="toggleDropdown('github')"
-            :aria-expanded="isDropdownOpen.github"
-          >
-            <i class="fab fa-github icon"></i>
-            <span>GitHub</span>
-            <i
-              class="fas fa-chevron-down dropdown-icon"
-              :class="{ rotate: isDropdownOpen.github }"
-            ></i>
-          </button>
-          <transition name="slide">
-            <div
-              class="dropdown-content"
-              v-if="isDropdownOpen.github"
-              aria-label="GitHub Projects Dropdown"
-            >
-              <a
-                v-for="link in filteredGithubLinks"
-                :key="link.id"
-                :href="link.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="dropdown-link"
-              >
-                <i :class="link.icon" class="icon"></i>
-                <span>{{ link.label }}</span>
-              </a>
-            </div>
-          </transition>
-        </div>
+      
         <!-- Dropdown for Personal Links -->
         <div class="dropdown">
           <button
@@ -207,12 +208,6 @@ export default {
           icon: "fab fa-dev",
         },
         {
-          id: 58,
-          label: "Telegram Channel",
-          url: "https://t.me/+XpsVdhvIlVM4ZTA1",
-          icon: "fab fa-telegram",
-        },
-        {
           id: 14,
           label: "Send Me a Email",
           url: "mailto:reymelrey.mislang@gmail.com",
@@ -223,6 +218,12 @@ export default {
           label: "Buy Me a Coffee",
           url: "https://buymeacoffee.com/reymelreym7",
           icon: "fas fa-coffee",
+        },
+        {
+          id: 58,
+          label: "Telegram Channel",
+          url: "https://t.me/+XpsVdhvIlVM4ZTA1",
+          icon: "fab fa-telegram",
         },
       ],
       personalLinks: [
